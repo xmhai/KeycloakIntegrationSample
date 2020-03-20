@@ -7,7 +7,7 @@
 
 	<properties>
 	    <jdk.version>1.8</jdk.version>
-	    <spring.version>5.0.15.RELEASE</spring.version>
+	    <spring.version>5.2.4.RELEASE</spring.version>
 	    <spring.security.version>5.0.13.RELEASE</spring.security.version>
 	</properties>
 
