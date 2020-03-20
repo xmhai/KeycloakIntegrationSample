@@ -163,6 +163,7 @@ public class HomeController {
 	private Keycloak getKeycloak() {
 		KeycloakDeployment deployment = adapterDeploymentContext.resolveDeployment(null);
 // use admin user account to invoke service 
+// User needs at least "manage-users, view-clients, view-realm, view-users" roles for "realm-management"
 //		Keycloak keycloak = KeycloakBuilder.builder() //
 //				.serverUrl(deployment.getAuthServerBaseUrl()) //
 //				.realm("master") //
@@ -171,7 +172,8 @@ public class HomeController {
 //				.username("api") //
 //				.password("api") //
 //				.build();
-		// user service account to invoke service
+		// use service account to invoke service
+		// user service account needs at least "manage-users, view-clients, view-realm, view-users" roles for "realm-management"
 		Keycloak keycloak = KeycloakBuilder.builder() //
 				.serverUrl(deployment.getAuthServerBaseUrl()) //
 				.realm(deployment.getRealm()) //
@@ -197,7 +199,6 @@ public class HomeController {
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
 
-		// User "idm-admin" needs at least "manage-users, view-clients, view-realm, view-users" roles for "realm-management"
 		KeycloakDeployment deployment = adapterDeploymentContext.resolveDeployment(null);
 		try (Keycloak keycloak = this.getKeycloak()) {
 			RealmResource realm = keycloak.realm(deployment.getRealm());
