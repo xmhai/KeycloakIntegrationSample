@@ -1,0 +1,25 @@
+{
+  "realm" : "public",
+  "resource" : "portal",
+  "auth-server-url" : "http://localhost:8180/auth",
+  "ssl-required" : "none",
+  "use-resource-role-mappings" : false,
+  "enable-cors" : true,
+  "cors-max-age" : 1000,
+  "cors-allowed-methods" : "POST, PUT, DELETE, GET",
+  "cors-exposed-headers" : "WWW-Authenticate, My-custom-exposed-Header",
+  "bearer-only" : false,
+  "enable-basic-auth" : false,
+  "expose-token" : true,
+  "verify-token-audience" : true,
+  "credentials" : {
+      "secret" : "7feada90-1d85-433d-88a8-67f918b210b9"
+  },
+
+   "connection-pool-size" : 20,
+   "disable-trust-manager": true,
+   "allow-any-hostname" : true,
+   "token-minimum-time-to-live" : 10,
+   "min-time-between-jwks-requests" : 10,
+   "public-key-cache-ttl": 86400
+}
