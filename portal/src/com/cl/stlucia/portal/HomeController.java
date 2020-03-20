@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,9 +73,26 @@ public class HomeController {
 	private String getLoginId(Principal principal) {
 		OidcKeycloakAccount account = (OidcKeycloakAccount)((KeycloakAuthenticationToken)principal).getAccount();
 		KeycloakSecurityContext context = account.getKeycloakSecurityContext();
+		
 		IDToken idToken = context.getIdToken();
-
 		return idToken.getPreferredUsername();
+	}
+	
+	private Set<String> getUserRealmRoles(Principal principal) {
+		OidcKeycloakAccount account = (OidcKeycloakAccount)((KeycloakAuthenticationToken)principal).getAccount();
+		
+		Set<String> roles = account.getRoles();
+		System.out.println("Roles from account: "+roles);
+		return account.getRoles();
+	}
+	
+	private Set<String> getUserClientRoles(Principal principal) {
+		OidcKeycloakAccount account = (OidcKeycloakAccount)((KeycloakAuthenticationToken)principal).getAccount();
+		KeycloakSecurityContext context = account.getKeycloakSecurityContext();
+		
+		Set<String> roles = context.getToken().getResourceAccess("portal").getRoles();
+		System.out.println("Roles from token: "+roles);
+		return roles;
 	}
 	
 	@RequestMapping("/main")
@@ -82,8 +100,10 @@ public class HomeController {
 		OidcKeycloakAccount account = (OidcKeycloakAccount)((KeycloakAuthenticationToken)principal).getAccount();
 		KeycloakSecurityContext context = account.getKeycloakSecurityContext();
 		IDToken idToken = context.getIdToken();
-
-		model.addAttribute("loginId", idToken.getName()+" ("+idToken.getPreferredUsername()+")");
+		model.addAttribute("loginId", idToken.getName());
+		model.addAttribute("userName", getLoginId(principal));
+		model.addAttribute("realmRoles", getUserRealmRoles(principal));
+		model.addAttribute("clientRoles", getUserClientRoles(principal));
 		
 		ModelAndView mv = new ModelAndView("main");
 		return mv;

@@ -8,6 +8,10 @@
 </head>
 <body>
 Welcome back: ${loginId}<br>
+UserName: ${userName}<br>
+Realm Roles: ${realmRoles}<br>
+Client Roles: ${clientRoles}<br>
+<hr>
 <a href="${pageContext.request.contextPath}/sso/logout">Logout</a><br>
 <a href="${pageContext.request.contextPath}/ssoLogout">Logout (redirect)</a>
 <hr>
